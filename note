@@ -1,0 +1,3 @@
+- bắt lỗi khi sai username =>ok
+- check token all api
+- nếu có 2 user (1:admin, 2:member). member có thêm sửa xóa bài viết hay k?

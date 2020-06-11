@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"
+    integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+        <link rel='stylesheet' href="/stylesheets/signin.css" />
+</head>
+<body>
+    <body class="text-center">
+        <form class="form-signin">
+      <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required="" autofocus="">
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" name="password" id="password" class="form-control" placeholder="Password" required="">
+      <label for="inputGmail" class="sr-only">Gmail</label>
+      <input type="gmail" name="gmail" id="gmail" class="form-control" placeholder="Gmail" required="">
+      <button class="btn btn-lg btn-primary btn-block" id="btn" type="button">Sign in</button>
+      <p class="mt-5 mb-3 text-muted">© copyRight</p>
+    </form>
+    </body>
+</body>
+<script>
+    $("#btn").click(function () {
+    var email = $("#email").val();
+    var password = $("#password").val();
+    var gmail = $("#gmail").val();
+    var isEmail = false;
+    if (email == "") {
+        $(".tbao").html("Bạn vui lòng nhập thông tin");
+        isEmail = false;
+    } else {
+        $(".tbao").html("");
+        isEmail = true;
+    };
+    var isPass = false;
+    if (password == "") {
+        $(".tbao2").html("Bạn vui lòng nhập thông tin");
+        isPass = false;
+    } else {
+        $(".tbao2").html("");
+        isPass = true;
+    }
+    if (isPass == true && isEmail == true) {
+        $.ajax({
+            url: "/user/signin",
+            type: "post",
+            data: {
+                email: email,
+                password: password,
+                gmail: gmail,
+            }
+        }).then(function(data){
+            if(data.error){
+                alert(data.message)
+            }else{
+                alert(data.message)
+                window.location.href = "/user/login"
+            }
+        })
+    };
+});
+
+</script>
+</html>

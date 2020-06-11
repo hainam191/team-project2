@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"
+    integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+        <link rel='stylesheet' href="/stylesheets/signin.css" />
+</head>
+<body>
+    <body class="text-center">
+        <form class="form-signin">
+      <h1 class="h3 mb-3 font-weight-normal">Log in</h1>
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required="" autofocus="">
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" name="password" id="password" class="form-control" placeholder="Password" required="">
+      <button class="btn btn-lg btn-primary btn-block" id="btn" type="button">Login</button>
+      <div style=" margin: 10px 0px; "><a href="#">forgot Password? </a></div>
+      <p class="mt-5 mb-3 text-muted">© copyRight</p>
+    </form>
+    </body>
+</body>
+<script>
+    $("#btn").click(function(){
+        var email=$("#email").val();
+        var password=$("#password").val();
+        $.ajax({
+            url: "/user/login" ,
+            type: "post",
+            data:{
+                email:email,
+                password:password,
+           }
+        }).then(function(user){
+            if(user.user===false){
+                alert(user.message);
+                window.location.href = "/user/login";
+            }
+            if(user.token){
+                console.log(user);
+                alert(user.message);
+                setCookie("token",user.token,1)
+                window.location.href = "/user/private";
+            }
+        });
+    });
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }     
+</script>
+</html>
